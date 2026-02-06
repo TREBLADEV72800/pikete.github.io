@@ -42,3 +42,10 @@ Thumbs.db
 
 # Local Netlify folder
 .netlify
+
+# Temporary files
+tmpclaude-*
+nul
+
+# Source images folder (not needed in repo)
+necessario
