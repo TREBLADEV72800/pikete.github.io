@@ -1,54 +1,76 @@
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import type { Page } from '@/types';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ChevronDown } from 'lucide-react';
+import { LogoImage } from '@/components/Logo';
 
 interface HeroProps {
   onNavigate: (page: Page) => void;
 }
 
 export function Hero({ onNavigate }: HeroProps) {
+  const { scrollY } = useScroll();
+  const scrollIndicatorOpacity = useTransform(scrollY, [0, 100], [1, 0]);
+
   return (
     <>
-      {/* Apple-style Hero - full screen, massive typography, clean */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 overflow-hidden bg-black">
+      {/* Hero Section — Full viewport */}
+      <section className="relative h-[100dvh] min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 overflow-hidden bg-black">
+        {/* Subtle radial gradient background */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: 'radial-gradient(ellipse at center, rgba(249,115,22,0.03) 0%, transparent 70%)',
+          }}
+        />
+
         {/* Content */}
         <div className="relative z-10 flex flex-col items-center text-center max-w-5xl mx-auto">
-          {/* Headline - Apple style massive text - ottimizzato mobile */}
+          {/* Logo */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.5, ease: 'easeOut' }}
+            className="mb-10 flex justify-center w-full"
+          >
+            <LogoImage size="lg" className="mx-auto" />
+          </motion.div>
+
+          {/* Headline */}
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white tracking-tight leading-[1.1] sm:leading-[1.05] mb-6 px-2"
+            transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+            className="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-normal leading-[0.95] mb-4 px-2"
           >
-            Musica.
+            Musica
             <br />
-            <span className="text-white/50">Attitudine.</span>
+            <span className="text-white/50 tracking-normal">Attitudine</span>
             <br />
-            Stile.
+            Stile
           </motion.h1>
 
-          {/* Subtitle - ottimizzato mobile */}
+          {/* Tagline */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-            className="text-lg sm:text-xl md:text-2xl text-white/60 mb-10 sm:mb-12 max-w-2xl leading-relaxed px-4"
+            transition={{ duration: 0.8, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+            className="text-base sm:text-lg md:text-xl text-white/60 font-medium tracking-tight mb-6 max-w-2xl leading-snug px-4"
           >
             Non siamo una band.
             <br />
-            Siamo una famiglia.
+            Siamo un collettivo.
           </motion.p>
 
-          {/* CTA Buttons - Apple style - ottimizzato mobile */}
+          {/* CTA Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+            transition={{ duration: 0.8, delay: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
             className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto px-4"
           >
             <motion.button
               onClick={() => onNavigate('artists')}
-              className="group w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 bg-white text-black font-semibold rounded-full text-base sm:text-lg transition-all hover:bg-white/90"
+              className="group w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 bg-white text-black font-semibold rounded-full text-base sm:text-lg transition-all hover:bg-white/90 active:scale-95"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
@@ -59,7 +81,7 @@ export function Hero({ onNavigate }: HeroProps) {
             </motion.button>
             <motion.button
               onClick={() => onNavigate('spoiler')}
-              className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 bg-white/5 text-white font-semibold rounded-full text-base sm:text-lg border border-white/10 hover:bg-white/10 transition-all"
+              className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 bg-white/5 text-white font-semibold rounded-full text-base sm:text-lg border border-white/10 hover:bg-white/10 transition-all active:scale-95"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
@@ -68,15 +90,22 @@ export function Hero({ onNavigate }: HeroProps) {
           </motion.div>
         </div>
 
+        {/* Scroll indicator */}
+        <motion.div
+          style={{ opacity: scrollIndicatorOpacity }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        >
+          <ChevronDown className="w-6 h-6 text-white/30 animate-bounce" />
+        </motion.div>
       </section>
 
-      {/* Chi Siamo Section - ottimizzato mobile */}
-      <section className="py-12 sm:py-16 md:py-24 px-4 sm:px-6 bg-black border-t border-white/5">
+      {/* Chi Siamo Section */}
+      <section className="py-6 md:py-8 px-4 sm:px-6 bg-black border-t border-white/5">
         <div className="max-w-4xl mx-auto text-center">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
+            viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
             className="text-orange-500 font-medium tracking-wider uppercase text-xs sm:text-sm mb-4 sm:mb-6"
           >
@@ -86,9 +115,9 @@ export function Hero({ onNavigate }: HeroProps) {
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
+            viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.8, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white tracking-tight mb-6 sm:mb-8 px-2"
+            className="text-2xl md:text-3xl font-black text-white mb-4 sm:mb-6 tracking-tighter"
           >
             Pikete non è una band.
           </motion.h2>
@@ -96,14 +125,11 @@ export function Hero({ onNavigate }: HeroProps) {
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
+            viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
-            className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/60 leading-relaxed max-w-2xl mx-auto px-4"
+            className="text-base md:text-lg lg:text-xl text-white/50 leading-relaxed font-medium tracking-tight max-w-2xl mx-auto px-4"
           >
-            È una label. Un gruppo di amici che sanno fare musica.
-            <br />
-            <br />
-            Quattro artisti, quattro visioni, una stessa famiglia.
+            È una label, un gruppo di amici che fanno musica. Quattro artisti con la stessa visione ma percorsi personali distinti. Stili diversi, stessa fame.
           </motion.p>
         </div>
       </section>

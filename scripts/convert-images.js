@@ -6,9 +6,9 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const sourceDir = path.join(__dirname, 'necessario');
-const targetArtistsDir = path.join(__dirname, 'public', 'artists');
-const targetLoghiDir = path.join(__dirname, 'public', 'loghi');
+const sourceDir = path.join(__dirname, '..', '.assets_raw');
+const targetArtistsDir = path.join(__dirname, '..', 'public', 'artists');
+const targetLoghiDir = path.join(__dirname, '..', 'public', 'loghi');
 
 // Artisti photos - simple conversion
 const artists = [
@@ -95,7 +95,7 @@ async function copySpoilers() {
     { file: 'spoilerdysa.mp4', name: 'dysa.mp4' }
   ];
 
-  const targetDir = path.join(__dirname, 'public', 'spoilers');
+  const targetDir = path.join(__dirname, '..', 'public', 'spoilers');
 
   for (const spoiler of spoilers) {
     const input = path.join(sourceDir, spoiler.file);

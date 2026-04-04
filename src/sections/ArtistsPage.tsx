@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { artists } from '@/data/artists';
 import type { Page } from '@/types';
-import { ArrowRight } from 'lucide-react';
 import { useState } from 'react';
 
 interface ArtistsPageProps {
@@ -14,106 +13,97 @@ export function ArtistsPage({ onNavigate }: ArtistsPageProps) {
   };
 
   return (
-    <section className="min-h-screen py-20 sm:py-24 md:py-32 lg:py-48 px-4 sm:px-6 bg-black">
+    <section className="min-h-screen pt-20 pb-16 sm:pt-28 sm:pb-24 px-4 sm:px-6 lg:px-8 bg-black">
       <div className="max-w-7xl mx-auto">
-        {/* Header - Apple style - ottimizzato mobile */}
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-          className="text-center mb-12 sm:mb-16 md:mb-20"
+          className="text-center mb-8 sm:mb-12"
         >
-          <p className="text-white/50 text-xs sm:text-sm font-medium tracking-wider uppercase mb-3 sm:mb-4">
-            Il Cuore di Pikete
-          </p>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white tracking-tight mb-4 sm:mb-6 px-2">
-            I Nostri Artisti
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tighter mb-3 leading-none">
+            Artisti.
           </h1>
-          <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-2xl mx-auto px-4">
-            Quattro visioni uniche. Una stessa passione.
+          <p className="text-base sm:text-lg md:text-xl text-white/50 font-medium tracking-tight">
+            Quattro voci, un collettivo.
           </p>
         </motion.div>
 
-        {/* Artists List - ottimizzato mobile */}
-        <div className="space-y-6 sm:space-y-8">
-          {artists.map((artist, index) => (
-            <motion.div
+        {/* Artists Grid — equal sizing */}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.15 } },
+          }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"
+        >
+          {artists.map((artist) => (
+            <ArtistGridCard
               key={artist.id}
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.1, ease: [0.25, 0.1, 0.25, 1] }}
+              artist={artist}
               onClick={() => handleArtistClick(artist.id)}
-              className="group cursor-pointer flex flex-col md:flex-row gap-4 sm:gap-6 md:gap-8 items-center bg-white/5 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 border border-white/10 hover:bg-white/[0.07] hover:border-white/20 transition-all"
-            >
-              {/* Image - ottimizzato mobile */}
-              <div className="relative w-full md:w-1/3 max-w-[200px] sm:max-w-[250px] md:max-w-none rounded-xl sm:rounded-2xl overflow-hidden bg-white/5 aspect-[3/4]">
-                <LazyImage
-                  src={artist.image}
-                  alt={artist.name}
-                />
-              </div>
-
-              {/* Content - ottimizzato mobile */}
-              <div className="flex-1 text-center md:text-left w-full">
-                <p className="text-white/40 text-xs sm:text-sm font-medium tracking-wider uppercase mb-2 sm:mb-3">
-                  {artist.role}
-                </p>
-                <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4">
-                  {artist.name}
-                </h3>
-                <p className="text-white/60 mb-4 sm:mb-6 line-clamp-3 leading-relaxed text-sm sm:text-base px-2 md:px-0">
-                  {artist.bio}
-                </p>
-
-                {/* Genres - ottimizzato mobile */}
-                <div className="flex flex-wrap gap-2 justify-center md:justify-start mb-4 sm:mb-6">
-                  {artist.genres.slice(0, 3).map((genre) => (
-                    <span
-                      key={genre}
-                      className="px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm bg-white/5 text-white/60 rounded-full border border-white/10"
-                    >
-                      {genre}
-                    </span>
-                  ))}
-                </div>
-
-                {/* CTA - ottimizzato mobile */}
-                <div className="inline-flex items-center gap-2 sm:gap-3 text-white font-medium group/btn text-sm sm:text-base">
-                  Scopri il profilo
-                  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover/btn:translate-x-1" />
-                </div>
-              </div>
-            </motion.div>
+            />
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
 }
 
-// Lazy load image component
-interface LazyImageProps {
-  src: string;
-  alt: string;
+// Grid card with image overlay
+interface ArtistGridCardProps {
+  artist: (typeof artists)[0];
+  onClick: () => void;
 }
 
-function LazyImage({ src, alt }: LazyImageProps) {
+function ArtistGridCard({ artist, onClick }: ArtistGridCardProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
-    <>
-      {!imageLoaded && (
-        <div className="absolute inset-0 bg-white/5 animate-pulse" />
-      )}
-      <img
-        src={src}
-        alt={alt}
-        className={`w-full h-full object-contain transition-opacity duration-700 ${
-          imageLoaded ? 'opacity-100' : 'opacity-0'
-        } group-hover:scale-105`}
-        onLoad={() => setImageLoaded(true)}
-        loading="lazy"
-      />
-    </>
+    <motion.div
+      variants={{
+        hidden: { opacity: 0, y: 30 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+      }}
+      onClick={onClick}
+      className="group cursor-pointer max-w-[90%] mx-auto"
+    >
+      <div className="relative aspect-[3/4] rounded-xl overflow-hidden bg-white/5 border border-white/5 hover:border-orange-500/30 transition-all duration-500 hover:shadow-2xl hover:shadow-orange-500/5">
+        {/* Loading placeholder */}
+        {!imageLoaded && (
+          <div className="absolute inset-0 bg-white/5 animate-pulse flex items-center justify-center">
+            <span className="text-2xl font-bold text-white/20">{artist.name.charAt(0)}</span>
+          </div>
+        )}
+
+        {/* Image */}
+        <img
+          src={artist.image}
+          alt={`Foto di ${artist.name}, artista Pikete`}
+          className={`w-full h-full object-cover transition-transform duration-700 ease-out ${
+            imageLoaded ? 'opacity-100' : 'opacity-0'
+          } group-hover:scale-[1.03]`}
+          onLoad={() => setImageLoaded(true)}
+          loading="lazy"
+        />
+
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+
+        <div className="absolute bottom-0 left-0 right-0 p-5">
+          <h3 className="text-lg md:text-xl font-black text-white tracking-tighter mb-1">
+            {artist.name}
+          </h3>
+          {artist.quote && (
+            <p className="text-xs sm:text-sm text-white/50 italic line-clamp-2 font-medium tracking-tight">
+              {artist.quote}
+            </p>
+          )}
+        </div>
+      </div>
+    </motion.div>
   );
 }

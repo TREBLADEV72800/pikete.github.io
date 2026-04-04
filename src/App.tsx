@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import type { Page } from '@/types';
 import { Navbar } from '@/components/Navbar';
 import { LogoImage } from '@/components/Logo';
-import './App.css';
+import { CreatorBadge } from '@/components/CreatorBadge';
 
 // Lazy load sections for better performance
 const Hero = lazy(() => import('@/sections/Hero').then(m => ({ default: m.Hero })));
@@ -32,7 +32,7 @@ function PageLoader() {
 // Initial loading screen
 function InitialLoader() {
   return (
-    <div className="fixed inset-0 bg-dark flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-[#0a0a0a] flex items-center justify-center z-50">
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -61,9 +61,18 @@ function InitialLoader() {
 
 // Page transition variants
 const pageVariants = {
-  initial: { opacity: 0, y: 10 },
-  animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -10 },
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
+};
+
+// Page title map
+const pageTitles: Record<string, string> = {
+  home: 'Pikete — Collettivo Musicale',
+  artists: 'Artisti — Pikete',
+  'artist-detail': 'Pikete',
+  spoiler: 'Spoiler — Pikete',
+  contacts: 'Contatti — Pikete',
 };
 
 function App() {
@@ -78,16 +87,25 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
+  // Update document title on page change
+  useEffect(() => {
+    if (currentPage === 'artist-detail' && selectedArtistId) {
+      const artist = getArtistById(selectedArtistId);
+      document.title = artist ? `${artist.name} — Pikete` : 'Pikete';
+    } else {
+      document.title = pageTitles[currentPage] || 'Pikete';
+    }
+  }, [currentPage, selectedArtistId]);
+
   const handleNavigate = (page: Page, artistId?: string) => {
     if (page === currentPage && !artistId) return;
 
-    setTimeout(() => {
-      setCurrentPage(page);
-      if (artistId) {
-        setSelectedArtistId(artistId);
-      }
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 150);
+    setCurrentPage(page);
+    if (artistId) {
+      setSelectedArtistId(artistId);
+    }
+    // Scroll to top immediately on navigation
+    window.scrollTo(0, 0);
   };
 
   const selectedArtist = useMemo(() => {
@@ -99,7 +117,7 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-dark text-white overflow-x-hidden">
+    <div className="min-h-screen bg-[#0a0a0a] text-white overflow-x-hidden">
       <Navbar currentPage={currentPage} onNavigate={handleNavigate} />
 
       <main className="relative">
@@ -111,12 +129,12 @@ function App() {
               initial="initial"
               animate="animate"
               exit="exit"
-              transition={{ duration: 0.3, ease: 'easeInOut' }}
+              transition={{ duration: 0.3 }}
             >
               <Suspense fallback={<PageLoader />}>
                 <Hero onNavigate={handleNavigate} />
                 <ArtistsList onNavigate={handleNavigate} />
-                <Footer />
+                <Footer onNavigate={handleNavigate} />
               </Suspense>
             </motion.div>
           )}
@@ -128,12 +146,12 @@ function App() {
               initial="initial"
               animate="animate"
               exit="exit"
-              transition={{ duration: 0.3, ease: 'easeInOut' }}
+              transition={{ duration: 0.3 }}
             >
-              <div className="pt-16 sm:pt-20">
+              <div className="pt-18">
                 <Suspense fallback={<PageLoader />}>
                   <ArtistsPage onNavigate={handleNavigate} />
-                  <Footer />
+                  <Footer onNavigate={handleNavigate} />
                 </Suspense>
               </div>
             </motion.div>
@@ -146,12 +164,12 @@ function App() {
               initial="initial"
               animate="animate"
               exit="exit"
-              transition={{ duration: 0.3, ease: 'easeInOut' }}
+              transition={{ duration: 0.3 }}
             >
-              <div className="pt-16 sm:pt-20">
+              <div className="pt-18">
                 <Suspense fallback={<PageLoader />}>
                   <ArtistDetail artist={selectedArtist} onNavigate={handleNavigate} />
-                  <Footer />
+                  <Footer onNavigate={handleNavigate} />
                 </Suspense>
               </div>
             </motion.div>
@@ -164,12 +182,12 @@ function App() {
               initial="initial"
               animate="animate"
               exit="exit"
-              transition={{ duration: 0.3, ease: 'easeInOut' }}
+              transition={{ duration: 0.3 }}
             >
-              <div className="pt-16 sm:pt-20">
+              <div className="pt-18">
                 <Suspense fallback={<PageLoader />}>
                   <SpoilerPage />
-                  <Footer />
+                  <Footer onNavigate={handleNavigate} />
                 </Suspense>
               </div>
             </motion.div>
@@ -182,18 +200,20 @@ function App() {
               initial="initial"
               animate="animate"
               exit="exit"
-              transition={{ duration: 0.3, ease: 'easeInOut' }}
+              transition={{ duration: 0.3 }}
             >
-              <div className="pt-16 sm:pt-20">
+              <div className="pt-18">
                 <Suspense fallback={<PageLoader />}>
                   <ContactsPage />
-                  <Footer />
+                  <Footer onNavigate={handleNavigate} />
                 </Suspense>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
       </main>
+
+      <CreatorBadge />
     </div>
   );
 }

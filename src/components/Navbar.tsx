@@ -2,8 +2,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { navItems } from '@/data/artists';
 import type { Page } from '@/types';
 import { LogoImage } from './Logo';
-import { useState, useEffect } from 'react';
-import { X, Menu } from 'lucide-react';
+import { useState, useEffect, useCallback } from 'react';
 
 interface NavbarProps {
   currentPage: Page;
@@ -16,16 +15,13 @@ export function Navbar({ currentPage, onNavigate }: NavbarProps) {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
+      setIsScrolled(window.scrollY > 50);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    setIsMobileMenuOpen(false);
-  }, [currentPage]);
-
+  // Lock body scroll when mobile menu is open
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = 'hidden';
@@ -37,134 +33,123 @@ export function Navbar({ currentPage, onNavigate }: NavbarProps) {
     };
   }, [isMobileMenuOpen]);
 
-  const handleNavClick = (href: string) => {
-    onNavigate(href as Page);
-    setIsMobileMenuOpen(false);
-  };
+  const handleNavClick = useCallback((href: string) => {
+    if (isMobileMenuOpen) {
+      setIsMobileMenuOpen(false);
+      // Small delay so close animation is visible before navigating
+      setTimeout(() => {
+        onNavigate(href as Page);
+      }, 150);
+    } else {
+      onNavigate(href as Page);
+    }
+  }, [isMobileMenuOpen, onNavigate]);
 
   return (
     <>
-      {/* Apple-style navbar - glassmorphism, ultra thin */}
-      <motion.nav
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled
-            ? 'bg-black/80 backdrop-blur-xl border-b border-white/5'
-            : 'bg-transparent'
+      <nav
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-black ${
+          isScrolled ? 'border-b border-white/5' : ''
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 lg:h-20">
-            {/* Logo - Apple style centered */}
-            <motion.button
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-[59px] sm:h-[67px]">
+            {/* Logo */}
+            <button
               onClick={() => handleNavClick('home')}
-              className="flex-shrink-0"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              className="flex-shrink-0 flex items-center focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black outline-none rounded-lg"
+              aria-label="Torna alla Home"
             >
-              <LogoImage size="md" />
-            </motion.button>
+              <LogoImage size="sm" />
+            </button>
 
-            {/* Desktop Navigation - Apple style */}
-            <div className="hidden lg:flex items-center gap-1">
+            {/* Desktop Navigation */}
+            <div className="hidden lg:flex items-center gap-4">
               {navItems.map((item) => (
+                <button
+                  key={item.href}
+                  onClick={() => handleNavClick(item.href)}
+                  className={`relative px-1.5 py-1.5 text-[11.5px] sm:text-[12.5px] font-bold tracking-widest uppercase transition-colors duration-300 outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded ${
+                    currentPage === item.href || (item.href === 'home' && currentPage === 'home')
+                      ? 'text-orange-500'
+                      : 'text-white/60 hover:text-white'
+                  }`}
+                >
+                  {item.label}
+                  {/* Active indicator underline */}
+                  {(currentPage === item.href || (currentPage === 'artist-detail' && item.href === 'artists')) && (
+                    <motion.div
+                      layoutId="activeNav"
+                      className="absolute bottom-0 left-0 right-0 h-[2px] bg-orange-500"
+                      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                    />
+                  )}
+                </button>
+              ))}
+            </div>
+
+            {/* Hamburger Menu Button */}
+            <button
+              className="lg:hidden relative z-50 w-10 h-10 flex items-center justify-center focus-visible:ring-2 focus-visible:ring-orange-500 outline-none rounded-lg"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label={isMobileMenuOpen ? 'Chiudi menu' : 'Apri menu'}
+              aria-expanded={isMobileMenuOpen}
+            >
+              <div className="w-6 h-5 relative flex flex-col justify-between">
+                <span
+                  className={`block h-[2px] w-full bg-white rounded transition-all duration-300 origin-center ${
+                    isMobileMenuOpen ? 'rotate-45 translate-y-[9px]' : ''
+                  }`}
+                />
+                <span
+                  className={`block h-[2px] w-full bg-white rounded transition-all duration-300 ${
+                    isMobileMenuOpen ? 'opacity-0 scale-0' : ''
+                  }`}
+                />
+                <span
+                  className={`block h-[2px] w-full bg-white rounded transition-all duration-300 origin-center ${
+                    isMobileMenuOpen ? '-rotate-45 -translate-y-[9px]' : ''
+                  }`}
+                />
+              </div>
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      {/* Mobile Fullscreen Menu */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-40 bg-black lg:hidden flex flex-col items-center justify-center"
+            onClick={(e) => {
+              if (e.target === e.currentTarget) setIsMobileMenuOpen(false);
+            }}
+          >
+            <nav className="flex flex-col items-center space-y-8">
+              {navItems.map((item, index) => (
                 <motion.button
                   key={item.href}
                   onClick={() => handleNavClick(item.href)}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                    currentPage === item.href
-                      ? 'bg-white text-black'
-                      : 'text-white/70 hover:text-white hover:bg-white/5'
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  transition={{ delay: index * 0.1, duration: 0.3 }}
+                  className={`text-4xl sm:text-5xl font-black tracking-tighter uppercase transition-colors outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded-lg px-6 py-3 ${
+                    currentPage === item.href || (currentPage === 'artist-detail' && item.href === 'artists')
+                      ? 'text-orange-500'
+                      : 'text-white/40 hover:text-white'
                   }`}
                 >
                   {item.label}
                 </motion.button>
               ))}
-            </div>
-
-            {/* Mobile Menu Button */}
-            <motion.button
-              className="lg:hidden text-white p-2 relative z-50"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              whileTap={{ scale: 0.95 }}
-            >
-              <AnimatePresence mode="wait">
-                {isMobileMenuOpen ? (
-                  <motion.div
-                    key="close"
-                    initial={{ rotate: -90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: 90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <X className="w-6 h-6" />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="menu"
-                    initial={{ rotate: 90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: -90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <Menu className="w-6 h-6" />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.button>
-          </div>
-        </div>
-      </motion.nav>
-
-      {/* Apple-style mobile menu */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="fixed inset-0 bg-black/95 backdrop-blur-xl z-40 lg:hidden"
-              onClick={() => setIsMobileMenuOpen(false)}
-            />
-
-            <motion.div
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-              className="fixed inset-y-0 right-0 w-full max-w-sm bg-black z-40 lg:hidden flex flex-col"
-            >
-              <div className="flex flex-col justify-center h-full px-8">
-                {/* Logo in mobile menu */}
-                <div className="absolute top-8 left-8">
-                  <LogoImage size="sm" />
-                </div>
-
-                {navItems.map((item, index) => (
-                  <motion.button
-                    key={item.href}
-                    onClick={() => handleNavClick(item.href)}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.05 + 0.1 }}
-                    className={`py-5 text-left text-2xl font-semibold tracking-tight transition-colors ${
-                      currentPage === item.href
-                        ? 'text-white'
-                        : 'text-white/40'
-                    }`}
-                  >
-                    {item.label}
-                  </motion.button>
-                ))}
-              </div>
-            </motion.div>
-          </>
+            </nav>
+          </motion.div>
         )}
       </AnimatePresence>
     </>

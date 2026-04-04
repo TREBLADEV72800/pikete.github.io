@@ -116,11 +116,11 @@ Spotify: [da definire]
 {
   id: 'orion',
   name: 'Orion',
-  role: 'Artista / Producer',
-  image: '/artists/orion.webp',  // DA CONVERTIRE IN WEBP
-  bio: 'Orion è un artista di 16 anni, nato a Santo Domingo e cresciuto ad Asti. Unisce trap melodica, reggaeton e un vibe urbano‑latino legato alle sue origini cubane. Passa dall\'italiano allo spagnolo con naturalezza, senza forzature, e si ispira a Bad Bunny, Travis Scott, Ghali e Rauw Alejandro. Non si pone limiti: sperimenta nuovi sound, cambia flow, gioca con le melodie e continua ad affinare il suo stile. La sua musica nasce dall\'istinto, dalla cultura che porta con sé e da una vera fame di creare, costruendo un\'identità fresca, personale e riconoscibile. Non si chiude in una formula: segue l\'istinto, sperimenta, cambia flow e lascia che cultura e radici restino presenti.',
+  role: '',
+  image: '/artists/orion.webp',
+  bio: 'Orion è un artista classe 2009, nato a Santo Domingo e cresciuto ad Asti. Unisce trap melodica, reggaeton e un vibe urbano‑latino legato alle sue origini cubane. Passa dall\'italiano allo spagnolo con naturalezza, senza forzature, e si ispira a Bad Bunny, Travis Scott, Ghali e Rauw Alejandro. Non si pone limiti: sperimenta nuovi sound, cambia flow, gioca con le melodie e continua ad affinare il suo stile. La sua musica nasce dall\'istinto, dalla cultura che porta con sé e da una vera fame di creare, costruendo un\'identità fresca, personale e riconoscibile. Non si chiude in una formula: segue l\'istinto, sperimenta, cambia flow e lascia che cultura e radici restino presenti.',
   quote: '"Si formano stars perché siamo nella nebula"',
-  genres: ['Trap Melodico', 'Reggaeton', 'Urban Latino', 'Pop'],
+  genres: [],
   socialLinks: {
     spotify: 'https://open.spotify.com/artist/4xNXfzCYzsyWQzDCb4R1nf?si=2V5fB6A9Rquzztzm6Ci2NQ',
     appleMusic: 'https://music.apple.com/it/artist/%C3%B3rion/1806929389',
@@ -140,11 +140,11 @@ Spotify: [da definire]
 {
   id: 'blister',
   name: 'Blister',
-  role: 'Rapper',
-  image: '/artists/blister.webp',  // DA CONVERTIRE IN WEBP
-  bio: 'Blister, nato a Palermo, porta nei suoi pezzi la stessa rabbia e fame di strada con cui è cresciuto. Si muove tra vibes scure, trap e un rap tagliente, trasformando ogni barra in un colpo e ogni ritornello in qualcosa che resta. Si ispira a Fedez, Noyz Narcos e Chicoria, ma il suo stile è subito riconoscibile: crudo, diretto, senza filtri. Scrive per lasciare il segno, perché dietro ogni traccia c\'è una storia vera. Ogni brano è un percorso, un indizio per capire chi è davvero. Non cerca approvazione: si costruisce la strada da solo, deciso a dimostrare che non puoi fermare chi è disposto a dare tutto per arrivare dove vuole.',
+  role: '',
+  image: '/artists/blister.webp',
+  bio: 'Blister, nato a Palermo, porta nei suoi pezzi la stessa rabbia e fame di strada con cui è cresciuto. Si muove tra vibes scure, trap e un rap tagliente, trasformando ogni barra in un colpo e ogni ritornello in qualcosa che resta. Si ispira a Fedez, Noyz Narcos e Chicoria, ma il suo stile è subito riconoscibile: crudo, diretto, senza filtri. Scrive per lasciare il segno, perché dietro ogni traccia c\'è una story vera. Ogni brano è un percorso, un indizio per capire chi è davvero. Non cerca approvazione: si costruisce la strada da solo, deciso a dimostrare che non puoi fermare chi è disposto a dare tutto per arrivare dove vuole.',
   quote: '"Occhi spariscono, fine di un film / Odi sta wave ma resto nel chill"',
-  genres: ['Rap', 'Trap', 'Freestyle'],
+  genres: [],
   socialLinks: {
     youtube: 'https://youtube.com/@blistermine?si=Lq8CuhLcQMadBcqn',
     instagram: 'https://www.instagram.com/blistermine?igsh=MXBoZjJneG9pN2VhNQ==',
@@ -163,18 +163,19 @@ Spotify: [da definire]
 {
   id: 'dysa',
   name: 'Dysa',
-  role: 'Vocalist',
-  image: '/artists/dysa.webp',  // DA CONVERTIRE IN WEBP
-  bio: 'Dysa è un giovane artista italo-cubano di 16 anni che sta costruendo il suo nome nel genere urbano con un sound personale e riconoscibile. Cresciuto tra vibes latine e mood da festa, mescola reggaeton e trap melodica con flow sempre diversi. Le sue influenze (Bad Bunny, Luar La L, Nicky Jam ed Eladio Carrión) gli hanno dato un\'impronta forte, spingendolo a creare tracce che oscillano tra energia caliente e melodie più deep. La musica è la sua benzina, il suo playground, la sua passione più vera. Per lui è un playground: energia caliente, melodie deep e flow diversi convivono tra vibes latine, mood da festa, reggaeton e trap melodica.',
-  quote: '"Siempre estoy de pie, aunque tenga el mundo en contra"',
-  genres: ['Reggaeton', 'Trap Melodica', 'Urbano', 'Vocal'],
+  role: '',
+  image: '/artists/dysa.webp',
+  bio: 'Dysa è un giovane artista italo-cubano classe 2009 che sta costruendo il suo nome nel genere urbano con un sound personale e riconoscibile. Cresciuto tra vibes latine e mood da festa, mescola reggaeton e trap melodica con flow sempre diversi. Le sue influenze (Bad Bunny, Luar La L, Nicky Jam ed Eladio Carrión) gli hanno dato un\'impronta forte, spingendolo a creare tracce che oscillano tra energia caliente e melodie più deep. La musica è la sua benzina, il suo playground, la sua passione più vera. Per lui è un playground: energia caliente, melodie deep e flow diversi convivono tra vibes latine, mood da festa, reggaeton e trap melodica.',
+  quote: '"Siempre estoy de pie, aunque tenga il mundo en contra"',
+  genres: [],
   socialLinks: {
+    spotify: 'https://open.spotify.com/intl-it/artist/7DpAbgKOSps2rESKx2wVlW?si=QYhVPkOYQgK2B41-jzA8UA',
     instagram: 'https://www.instagram.com/dysapkt?igsh=eHNibzlhZTNocHU5'
-    // Altri: da aggiungere
   },
   spoiler: {
-    videoFile: '/spoilers/spoilerdysa.mp4',
-    description: 'Spoiler 20 secondi'
+    videoFile: '/spoilers/dysa.mp4',
+    description: 'Nuove vibes in arrivo',
+    locked: true
   }
 }
 ```
@@ -184,11 +185,11 @@ Spotify: [da definire]
 {
   id: 'licore',
   name: 'LiCore',
-  role: 'Rapper',
-  image: '/artists/licore.webp',  // DA CONVERTIRE IN WEBP
-  bio: 'LiCore ha 16 anni ed è nato ad Asti. Unisce il rap più classico a un suono più moderno, portando la sua voce e la sua fame a chi non ce l\'ha e vuole farsi sentire. La rabbia con cui è cresciuto e la lucidità ereditata dal fratello sono punti chiave della sua scrittura. I suoi flow restano classici, con influenze di colossi come Guè, Marracash, Ernia e Mezzosangue. Ogni testo nasce da fame di verità e vittoria. Il suo logo, la croce rovesciata, rappresenta la ribellione che LiCore urla nella sua musica. LiCore è Libertà. Parla a chi ha la stessa fame e non trova spazio per urlarla.',
+  role: '',
+  image: '/artists/licore.webp',
+  bio: 'LiCore è classe 2009 ed è nato ad Asti. Unisce il rap più classico a un suono più moderno, portando la sua voce e la sua fame a chi non ce l\'ha e vuole farsi sentire. La rabbia con cui è cresciuto e la lucidità ereditata dal fratello sono punti chiave della sua scrittura. I suoi flow restano classici, con influenze di colossi come Guè, Marracash, Ernia e Mezzosangue. Ogni testo nasce da fame di verità e vittoria. Il suo logo, la croce rovesciata, rappresenta la ribellione che LiCore urla nella sua musica. LiCore è Libertà. Parla a chi ha la stessa fame e non trova spazio per urlarla.',
   quote: '"LiCore è per il popolo, fra, come i dogo"',
-  genres: ['Rap', 'Trap', 'Hip-Hop'],
+  genres: [],
   socialLinks: {
     instagram: 'https://www.instagram.com/licore_swgg?igsh=MWJ3NTRjYmR4eGxlag==',
     tiktok: 'https://www.tiktok.com/@asktofrancesco?_r=1&_t=ZN-920cJKQlsaU'
@@ -205,19 +206,13 @@ Spotify: [da definire]
 
 ## 📁 FILE E ASSET
 
-### Cartella `necessario/` - Fonte
+### Cartella `.assets_raw/` - Fonte (Hidden/Backup)
 ```
-C:\Users\alber\Desktop\app\necessario\
-├── orionfotoprofilo.jpeg      → DA CONVERTIRE IN /public/artists/orion.webp
-├── blisterfotoprofilo.jpeg    → DA CONVERTIRE IN /public/artists/blister.webp
-├── dysafotoprofilo.jpeg       → DA CONVERTIRE IN /public/artists/dysa.webp
-├── licorofotoprofilo.jpeg     → DA CONVERTIRE IN /public/artists/licore.webp
-├── piketelogo.jpeg            → DA CONVERTIRE IN /public/loghi/pikete.webp + SFONDO TRASPARENTE
-├── treblalogo.jpeg            → DA CONVERTIRE IN /public/loghi/trebla.webp + SFONDO TRASPARENTE
-├── spoilerorion.mp4           → COPIARE IN /public/spoilers/orion.mp4
-├── spoilerblister.mp4         → COPIARE IN /public/spoilers/blister.mp4
-├── spoilerdysa.mp4            → COPIARE IN /public/spoilers/dysa.mp4
-└── txt.txt                    → CONTENUTI GIÀ LETTI
+C:\Users\alber\Desktop\app\.assets_raw\
+├── orionfotoprofilo.jpeg      → /public/artists/orion.webp
+├── blisterfotoprofilo.jpeg    → /public/artists/blister.webp
+...
+└── scripts/convert-images.js  → Utility di conversione
 ```
 
 ### Cartelle da Creare
@@ -279,7 +274,7 @@ Vedi sezione "ARTISTI - DATI COMPLETI" sopra.
 
 ### 6. Aggiornare `src/sections/Hero.tsx` o Home
 - Aggiungere sezione "Chi siamo" che spiega:
-  - "Pikete non è una band, è una label/gruppo di amici"
+  - "Pikete non è una band, è una label/gruppo di amici che fanno musica"
   - Breve descrizione del collettivo
 
 ### 7. Aggiornare il Logo

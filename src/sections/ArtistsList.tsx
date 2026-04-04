@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { artists } from '@/data/artists';
 import type { Page } from '@/types';
-import { ArrowRight } from 'lucide-react';
 import { useState } from 'react';
 
 interface ArtistsListProps {
@@ -14,61 +13,68 @@ export function ArtistsList({ onNavigate }: ArtistsListProps) {
   };
 
   return (
-    <section className="py-32 md:py-48 px-6 bg-black">
+    <section className="py-8 md:py-12 px-4 sm:px-6 bg-black">
       <div className="max-w-7xl mx-auto">
-        {/* Section Header - Apple style */}
+        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
+          viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-          className="text-center mb-20"
+          className="text-center mb-6 md:mb-10"
         >
-          <p className="text-white/50 text-sm font-medium tracking-wider uppercase mb-4">
+          <p className="text-white/50 text-sm sm:text-base font-medium tracking-wider uppercase mb-2 sm:mb-3">
             La Famiglia
           </p>
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight">
-            Gli Artisti
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tighter">
+            Gli Artisti.
           </h2>
         </motion.div>
 
-        {/* Artists Grid - Apple style, minimal */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {artists.map((artist, index) => (
+        {/* Artists Grid — 2 cols mobile, 4 cols desktop */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.15 } },
+          }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-1.5 md:gap-6 px-3 md:px-0"
+        >
+          {artists.map((artist) => (
             <ArtistCard
               key={artist.id}
               artist={artist}
-              index={index}
               onClick={() => handleArtistClick(artist.id)}
             />
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
 }
 
-// Apple-style artist card
+// Artist card with overlay
 interface ArtistCardProps {
-  artist: typeof artists[0];
-  index: number;
+  artist: (typeof artists)[0];
   onClick: () => void;
 }
 
-function ArtistCard({ artist, index, onClick }: ArtistCardProps) {
+function ArtistCard({ artist, onClick }: ArtistCardProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-50px' }}
-      transition={{ duration: 0.8, delay: index * 0.1, ease: [0.25, 0.1, 0.25, 1] }}
+      variants={{
+        hidden: { opacity: 0, y: 30 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+      }}
       onClick={onClick}
       className="group cursor-pointer"
     >
-      <div className="relative aspect-[3/4] rounded-3xl overflow-hidden bg-white/5">
-        {/* Placeholder */}
+      <div className="relative aspect-[3/4] rounded-lg overflow-hidden bg-white/5">
+        {/* Loading placeholder */}
         {!imageLoaded && (
           <div className="absolute inset-0 bg-white/5 animate-pulse" />
         )}
@@ -76,33 +82,22 @@ function ArtistCard({ artist, index, onClick }: ArtistCardProps) {
         {/* Image */}
         <img
           src={artist.image}
-          alt={artist.name}
-          className={`w-full h-full object-cover transition-all duration-700 ${
+          alt={`Foto di ${artist.name}, artista Pikete`}
+          className={`w-full h-full object-cover transition-transform duration-500 ${
             imageLoaded ? 'opacity-100' : 'opacity-0'
           } group-hover:scale-105`}
           onLoad={() => setImageLoaded(true)}
           loading="lazy"
         />
 
-        {/* Gradient overlay - subtle */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80" />
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
 
-        {/* Content */}
-        <div className="absolute bottom-0 left-0 right-0 p-6">
-          <h3 className="text-2xl font-bold text-white mb-1">
+        <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
+          <h3 className="text-lg sm:text-xl lg:text-2xl font-black text-white tracking-tighter">
             {artist.name}
           </h3>
-          <p className="text-white/60 text-sm">{artist.role}</p>
         </div>
-
-        {/* Hover arrow - Apple style */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileHover={{ opacity: 1 }}
-          className="absolute top-6 right-6 w-12 h-12 rounded-full bg-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-        >
-          <ArrowRight className="w-5 h-5 text-black" />
-        </motion.div>
       </div>
     </motion.div>
   );

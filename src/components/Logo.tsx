@@ -39,22 +39,22 @@ export function Logo({ className = '', size = 'md', variant = 'svg' }: LogoProps
   const [imageError, setImageError] = useState(false);
 
   const sizes = {
-    sm: 'w-[40px] h-auto',
-    md: 'w-[50px] h-auto',
-    lg: 'w-[70px] h-auto',
+    sm: 'w-[60px] h-auto',
+    md: 'w-[90px] h-auto',
+    lg: 'w-[250px] h-auto',
   };
 
   const imageSizes = {
-    sm: 'w-[40px] h-auto',
-    md: 'w-[50px] h-auto',
-    lg: 'w-[70px] h-auto',
+    sm: 'w-[60px] h-auto',
+    md: 'w-[90px] h-auto',
+    lg: 'w-[250px] h-auto',
   };
 
   // Use image if variant is 'image' and image loaded successfully
   if (variant === 'image' && !imageError) {
     return (
       <motion.img
-        src="/loghi/pikete.jpg"
+        src="/loghi/pikete.jpeg"
         alt="Pikete Logo"
         className={`${imageSizes[size]} ${className}`}
         initial={{ opacity: 0 }}
@@ -83,22 +83,22 @@ export function LogoSimple({ className = '', size = 'md', variant = 'svg' }: Log
   const [imageError, setImageError] = useState(false);
 
   const sizes = {
-    sm: 'w-[35px] h-auto',
-    md: 'w-[45px] h-auto',
-    lg: 'w-[60px] h-auto',
+    sm: 'w-[60px] h-auto',
+    md: 'w-[90px] h-auto',
+    lg: 'w-[250px] h-auto',
   };
 
   const imageSizes = {
-    sm: 'w-[35px] h-auto',
-    md: 'w-[45px] h-auto',
-    lg: 'w-[60px] h-auto',
+    sm: 'w-[60px] h-auto',
+    md: 'w-[90px] h-auto',
+    lg: 'w-[250px] h-auto',
   };
 
   // Use image if variant is 'image' and image loaded successfully
   if (variant === 'image' && !imageError) {
     return (
       <img
-        src="/loghi/pikete.jpg"
+        src="/loghi/pikete.jpeg"
         alt="Pikete"
         className={`${imageSizes[size]} ${className}`}
         onError={() => setImageError(true)}
@@ -119,9 +119,9 @@ export function LogoImage({ className = '', size = 'md' }: Omit<LogoProps, 'vari
   const [imageError, setImageError] = useState(false);
 
   const sizes = {
-    sm: 'w-[35px] h-auto',
-    md: 'w-[50px] h-auto',
-    lg: 'w-[65px] h-auto',
+    sm: 'w-[56px] h-auto',
+    md: 'w-[90px] h-auto',
+    lg: 'w-[230px] h-auto', // Hero logo size
   };
 
   if (imageError) {
@@ -134,9 +134,9 @@ export function LogoImage({ className = '', size = 'md' }: Omit<LogoProps, 'vari
 
   return (
     <img
-      src="/loghi/pikete.jpg"
+      src="/loghi/pikete.jpeg"
       alt="Pikete Logo"
-      className={`${sizes[size]} ${className}`}
+      className={`${sizes[size]} object-contain ${className}`}
       onError={() => setImageError(true)}
       loading="eager"
     />

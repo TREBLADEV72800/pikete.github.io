@@ -48,6 +48,7 @@ tmpclaude-*
 nul
 
 # Source images folder (not needed in repo)
-necessario
+.assets_raw/
 
 .vercel
+.env*.local
