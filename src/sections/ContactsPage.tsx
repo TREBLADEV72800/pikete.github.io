@@ -26,7 +26,7 @@ export function ContactsPage() {
 
 
   return (
-    <section className="min-h-[calc(100vh-4rem)] flex flex-col justify-center pt-24 pb-12 sm:pt-32 sm:pb-16 px-4 sm:px-6 bg-black">
+    <section className="flex flex-col justify-center pt-24 pb-12 sm:pt-32 sm:pb-16 px-4 sm:px-6 bg-black">
       <div className="max-w-4xl mx-auto w-full">
         {/* Header */}
         <motion.div
