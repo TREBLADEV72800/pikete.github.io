@@ -1,6 +1,4 @@
 import { motion } from 'framer-motion';
-import { Youtube } from 'lucide-react';
-import { piketeData } from '@/data/artists';
 import { LogoImage } from '@/components/Logo';
 import type { Page } from '@/types';
 
@@ -33,26 +31,6 @@ export function Footer({ onNavigate }: FooterProps) {
             </p>
           </motion.div>
 
-          {/* Right: Social icons */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="flex items-center gap-4"
-          >
-            {piketeData.socialLinks.youtube && (
-              <a
-                href={piketeData.socialLinks.youtube}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="YouTube di Pikete"
-                className="text-white/30 hover:text-white/60 transition-colors duration-300"
-              >
-                <Youtube className="w-6 h-6" />
-              </a>
-            )}
-          </motion.div>
         </div>
       </div>
     </footer>

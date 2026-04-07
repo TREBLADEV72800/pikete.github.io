@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
-import { Mail, Youtube, Copy, Check } from 'lucide-react';
+import { Mail, Copy, Check } from 'lucide-react';
 import { piketeData } from '@/data/artists';
-import { LogoImage } from '@/components/Logo';
 import { useState, useCallback } from 'react';
 
 export function ContactsPage() {
@@ -25,28 +24,10 @@ export function ContactsPage() {
     }
   }, []);
 
-  // Build social links from available data
-  const socialLinks = [
-    piketeData.socialLinks.youtube ? {
-      icon: Youtube,
-      label: 'YouTube',
-      href: piketeData.socialLinks.youtube,
-    } : null,
-  ].filter(Boolean) as { icon: React.ComponentType<{ className?: string }>; label: string; href: string }[];
 
   return (
     <section className="min-h-[calc(100vh-4rem)] flex flex-col justify-center pt-24 pb-12 sm:pt-32 sm:pb-16 px-4 sm:px-6 bg-black">
       <div className="max-w-4xl mx-auto w-full">
-        {/* Logo */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-          className="text-center mb-6 sm:mb-10"
-        >
-          <LogoImage size="md" />
-        </motion.div>
-
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -108,41 +89,6 @@ export function ContactsPage() {
           </div>
         </motion.div>
 
-        {/* Social Links */}
-        {socialLinks.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
-          >
-            <p className="text-white/50 text-xs sm:text-sm font-medium tracking-wider uppercase mb-4 sm:mb-6 text-center">
-              Social
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              {socialLinks.map((social, index) => {
-                const IconComponent = social.icon;
-                return (
-                  <motion.a
-                    key={social.label}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`${social.label} di Pikete`}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4 + index * 0.1, ease: [0.25, 0.1, 0.25, 1] }}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="group bg-white/5 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all flex flex-col items-center gap-2 sm:gap-3"
-                  >
-                    <IconComponent className="w-5 h-5 sm:w-7 sm:h-7 text-white" />
-                    <span className="text-white/70 text-xs sm:text-sm">{social.label}</span>
-                  </motion.a>
-                );
-              })}
-            </div>
-          </motion.div>
-        )}
       </div>
     </section>
   );

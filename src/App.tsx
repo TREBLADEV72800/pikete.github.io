@@ -32,7 +32,7 @@ function PageLoader() {
 // Initial loading screen
 function InitialLoader() {
   return (
-    <div className="fixed inset-0 bg-[#0a0a0a] flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-black flex items-center justify-center z-50">
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -117,7 +117,7 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white overflow-x-hidden">
+    <div className="min-h-screen bg-black text-white overflow-x-hidden">
       <Navbar currentPage={currentPage} onNavigate={handleNavigate} />
 
       <main className="relative">
