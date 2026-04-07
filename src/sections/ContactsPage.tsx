@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Mail, Copy, Check } from 'lucide-react';
+import { Mail, Youtube, Copy, Check } from 'lucide-react';
 import { piketeData } from '@/data/artists';
 import { useState, useCallback } from 'react';
 
@@ -88,6 +88,33 @@ export function ContactsPage() {
             </button>
           </div>
         </motion.div>
+
+        {/* Social Links */}
+        {piketeData.socialLinks.youtube && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+          >
+            <p className="text-white/50 text-xs sm:text-sm font-medium tracking-wider uppercase mb-4 sm:mb-6 text-center">
+              Social
+            </p>
+            <div className="flex justify-center">
+              <motion.a
+                href={piketeData.socialLinks.youtube}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="YouTube di Pikete"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="group bg-white/5 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all flex flex-col items-center gap-2 sm:gap-3"
+              >
+                <Youtube className="w-5 h-5 sm:w-7 sm:h-7 text-white" />
+                <span className="text-white/70 text-xs sm:text-sm">YouTube</span>
+              </motion.a>
+            </div>
+          </motion.div>
+        )}
 
       </div>
     </section>
