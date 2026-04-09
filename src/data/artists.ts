@@ -71,6 +71,11 @@ export const artists: Artist[] = [
     tracks: [
       { id: '1', title: 'Spoiler', artist: 'Dysa', duration: '0:20', description: 'Anteprima vibes latine' },
     ],
+    spoiler: {
+      videoFile: '/spoilers/dysa.mp4',
+      description: 'Nuove vibes in arrivo',
+      locked: true,
+    },
     socialLinks: {
       spotify: 'https://open.spotify.com/intl-it/artist/7DpAbgKOSps2rESKx2wVlW?si=QYhVPkOYQgK2B41-jzA8UA',
       instagram: 'https://www.instagram.com/dysapkt?igsh=eHNibzlhZTNocHU5',
@@ -97,7 +102,7 @@ export const artists: Artist[] = [
       description: 'Spoiler - Prossimamente',
     },
     socialLinks: {
-      instagram: 'https://www.instagram.com/licore_swgg?igsh=MWJ3NTRjYmR4eGxlag==',
+      instagram: 'https://www.instagram.com/licore666?igsh=MWJ3NTRjYmR4eGxlag==',
       tiktok: 'https://www.tiktok.com/@asktofrancesco?_r=1&_t=ZN-920cJKQlsaU',
     },
   },
@@ -110,6 +115,7 @@ export const piketeData = {
   email: 'piketelabel@gmail.com',
   socialLinks: {
     youtube: 'https://youtube.com/@pikete_pkt?si=vjJTQ7kz9Ct0Yr27',
+    instagram: 'https://www.instagram.com/pikete.label?igsh=dnZlZjBobHF5azZv',
   },
 };
 
@@ -133,12 +139,11 @@ export const spoilers: Spoiler[] = [
   },
   {
     id: 'dysa-spoiler',
-    title: 'Prossimamente',
+    title: 'Nuovo Singolo',
     artist: 'Dysa',
     artistId: 'dysa',
     videoFile: '/spoilers/dysa.mp4',
     description: 'Nuove vibes in arrivo',
-    locked: true,
   },
   {
     id: 'licore-spoiler',

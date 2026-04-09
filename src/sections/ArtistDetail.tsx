@@ -76,8 +76,8 @@ export function ArtistDetail({ artist, onNavigate }: ArtistDetailProps) {
 
   // Determine spoiler state
   const hasSpoiler = artist.spoiler && artist.spoiler.videoFile;
-  const isDysaLocked = artist.id === 'dysa';
-  const isLiCoreMissing = artist.id === 'licore';
+  const isLocked = artist.spoiler?.locked === true;
+  const isMissing = !hasSpoiler && !isLocked;
 
   return (
     <motion.section
@@ -241,8 +241,8 @@ export function ArtistDetail({ artist, onNavigate }: ArtistDetailProps) {
             Spoiler
           </p>
 
-          {isDysaLocked ? (
-            /* Locked state for Dysa */
+          {isLocked ? (
+            /* Locked state */
             <div className="w-full max-w-2xl mx-auto md:mx-0 aspect-video rounded-xl overflow-hidden bg-white/[0.02] border border-white/10 flex flex-col items-center justify-center relative">
               <div className="absolute inset-0 backdrop-blur-sm bg-white/[0.02]" />
               <div className="relative z-10 flex flex-col items-center">
@@ -253,8 +253,8 @@ export function ArtistDetail({ artist, onNavigate }: ArtistDetailProps) {
                 <p className="text-white/30 text-sm mt-1">Lo spoiler sarà disponibile a breve</p>
               </div>
             </div>
-          ) : isLiCoreMissing ? (
-            /* Missing state for LiCore */
+          ) : isMissing ? (
+            /* Missing state */
             <div className="w-full max-w-2xl mx-auto md:mx-0 aspect-video rounded-xl overflow-hidden bg-white/[0.02] border border-white/10 flex flex-col items-center justify-center">
               <p className="text-white/40 font-medium text-lg">Spoiler in arrivo</p>
               <p className="text-white/20 text-sm mt-1">Resta aggiornato per le novità</p>
