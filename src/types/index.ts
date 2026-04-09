@@ -15,6 +15,7 @@ export interface Artist {
   spoiler?: {
     videoFile: string;
     description: string;
+    locked?: boolean;
   };
   socialLinks: {
     spotify?: string;
