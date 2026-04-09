@@ -74,7 +74,6 @@ export const artists: Artist[] = [
     spoiler: {
       videoFile: '/spoilers/dysa.mp4',
       description: 'Nuove vibes in arrivo',
-      locked: true,
     },
     socialLinks: {
       spotify: 'https://open.spotify.com/intl-it/artist/7DpAbgKOSps2rESKx2wVlW?si=QYhVPkOYQgK2B41-jzA8UA',
